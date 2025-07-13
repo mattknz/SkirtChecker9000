@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "Skirt Price Tracker",
+  "version": "1.1",
+  "description": "Track the skirt price without visiting the page.",
+  "permissions": ["alarms", "notifications"],
+  "host_permissions": ["https://www.max.co.nz/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "icon.png"
+  }
+}
