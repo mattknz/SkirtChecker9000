@@ -1,9 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "Skirt Price Tracker",
+  "name": "Price Tracker 9000",
   "version": "1.1",
   "description": "Track the skirt price without visiting the page.",
-  "permissions": ["alarms", "notifications"],
+  "permissions": ["storage", "alarms", "notifications"],
   "host_permissions": ["https://www.max.co.nz/*"],
   "background": {
     "service_worker": "background.js"

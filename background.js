@@ -1,4 +1,3 @@
-const URL = "https://www.max.co.nz/carrie-tiered-skirt-310909vis-sapphire-night";
 let currentPrice = "Checking...";
 
 // Fetch price every hour
@@ -18,9 +17,22 @@ chrome.alarms.onAlarm.addListener((alarm) => {
   }
 });
 
-async function checkPriceNow() {
+function checkPriceNow() {
+  chrome.storage.local.get('trackedUrl', (data) => {
+    const url = data.trackedUrl;
+    if (!url) {
+      console.warn("No URL set in storage.");
+      currentPrice = "No URL set";
+      return;
+    }
+
+    fetchPriceFromUrl(url);
+  });
+}
+
+async function fetchPriceFromUrl(url) {
   try {
-    const response = await fetch(URL);
+    const response = await fetch(url);
     const text = await response.text();
 
     let newPrice = null;
@@ -49,10 +61,11 @@ async function checkPriceNow() {
       }
     } else {
       currentPrice = "Price not found";
+      console.warn("Could not find price on page.");
     }
   } catch (e) {
     currentPrice = "Error fetching price";
-    console.error(e);
+    console.error("Error fetching price:", e);
   }
 }
 
@@ -67,6 +80,9 @@ function notifyPriceChange(oldPrice, newPrice) {
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg.action === "getCurrentPrice") {
-    sendResponse({price: currentPrice});
+    sendResponse({ price: currentPrice });
   }
+   if (msg.action === "checkPriceNow") {
+    checkPriceNow();
+  } 
 });

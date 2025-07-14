@@ -1,14 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Skirt Price</title>
+  <title>Set Item URL</title>
   <style>
-    body { font-family: sans-serif; padding: 10px; }
+    body { font-family: sans-serif; padding: 10px; width: 250px; }
+    input[type="text"] { width: 100%; margin-bottom: 10px; }
+    button { width: 100%; }
   </style>
 </head>
 <body>
-  <h3>Skirt Price</h3>
-  <div id="price">Loading...</div>
+ <div>
+  <label>Current Price:</label>
+  <div id="price" style="font-weight: bold;">Loading...</div>
+ </div>
+  <h3>Item Price Tracker</h3>
+  <input type="text" id="urlInput" placeholder="Enter product URL" />
+  <button id="saveUrl">Save URL</button>
+  <p id="status"></p>
+
   <script src="popup.js"></script>
 </body>
 </html>
