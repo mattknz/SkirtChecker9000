@@ -1,7 +1,4 @@
 ﻿# SkirtChecker9000
 
 
-This checks a very specific URL:
-
-https://www.max.co.nz/carrie-tiered-skirt-310909vis-sapphire-night
-
+This checks URLs from the max.co.nz website and updates on price changes. There's very limited use cases.
