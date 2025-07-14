@@ -3,17 +3,33 @@
 <head>
   <title>Set Item URL</title>
   <style>
-    body { font-family: sans-serif; padding: 10px; width: 250px; }
-    input[type="text"] { width: 100%; margin-bottom: 10px; }
-    button { width: 100%; }
+    body {
+      font-family: sans-serif;
+      padding: 10px;
+      width: 250px;
+    }
+    input[type="text"] {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    button {
+      width: 100%;
+    }
+    .label {
+      font-weight: bold;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
- <div>
-  <label>Current Price:</label>
-  <div id="price" style="font-weight: bold;">Loading...</div>
- </div>
   <h3>Item Price Tracker</h3>
+
+  <label class="label">Item:</label>
+  <div id="itemName">Loading...</div>
+
+  <label class="label">Current Price:</label>
+  <div id="price">Loading...</div>
+
   <input type="text" id="urlInput" placeholder="Enter product URL" />
   <button id="saveUrl">Save URL</button>
   <p id="status"></p>
