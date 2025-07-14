@@ -1,4 +1,5 @@
 let currentPrice = "Checking...";
+let currentItemName = "Unknown Item";
 
 // Fetch price every hour
 chrome.runtime.onInstalled.addListener(() => {
@@ -23,6 +24,7 @@ function checkPriceNow() {
     if (!url) {
       console.warn("No URL set in storage.");
       currentPrice = "No URL set";
+      currentItemName = "No URL set";
       return;
     }
 
@@ -34,6 +36,14 @@ async function fetchPriceFromUrl(url) {
   try {
     const response = await fetch(url);
     const text = await response.text();
+
+    // Extract item name
+    const nameMatch = text.match(/<span[^>]*class="base"[^>]*data-ui-id="page-title-wrapper"[^>]*>([^<]+)<\/span>/i);
+    if (nameMatch && nameMatch[1]) {
+      currentItemName = nameMatch[1].trim();
+    } else {
+      currentItemName = "Name not found";
+    }
 
     let newPrice = null;
 
@@ -65,6 +75,7 @@ async function fetchPriceFromUrl(url) {
     }
   } catch (e) {
     currentPrice = "Error fetching price";
+    currentItemName = "Error fetching name";
     console.error("Error fetching price:", e);
   }
 }
@@ -73,16 +84,17 @@ function notifyPriceChange(oldPrice, newPrice) {
   chrome.notifications.create({
     type: "basic",
     iconUrl: "icon.png",
-    title: "Skirt Price Updated",
+    title: "Price Updated",
     message: `Old: ${oldPrice}\nNew: ${newPrice}`
   });
 }
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg.action === "getCurrentPrice") {
-    sendResponse({ price: currentPrice });
+    sendResponse({ price: currentPrice, name: currentItemName });
   }
-   if (msg.action === "checkPriceNow") {
+  if (msg.action === "checkPriceNow") {
     checkPriceNow();
-  } 
+  }
 });
+
